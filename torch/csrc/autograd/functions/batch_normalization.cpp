@@ -84,9 +84,9 @@ auto BatchNormForward::apply(const variable_list& inputs) -> variable_list {
 };
 
 auto BatchNormBackward::apply(const variable_list& grad_outputs) -> variable_list {
-  auto& input = this->input.unpack();
-  auto& weight = this->weight.unpack();
-  auto& bias = this->bias.unpack();
+  auto input = this->input.unpack_data();
+  auto weight = this->weight.unpack_data();
+  auto bias = this->bias.unpack_data();
   AutoGPU guard(input->getDevice());
 
   bool use_cudnn = false;

@@ -175,9 +175,9 @@ auto ConvBackward::apply(const variable_list& grad_outputs) -> variable_list {
 
   AutoGPU guard(input_.data->getDevice());
 
-  auto input = input_.unpack()->contiguous();
-  std::unique_ptr<Tensor> weight(weight_.unpack()->clone_shallow());
-  std::unique_ptr<Tensor> bias(bias_.unpack() ? bias_.unpack()->clone_shallow() : nullptr);
+  auto input = input_.unpack_data()->contiguous();
+  std::unique_ptr<Tensor> weight(weight_.unpack_data()->clone_shallow());
+  auto bias = bias_.unpack_data();
   auto grad_output = grad_outputs[0]->data->contiguous();
 
   int k = input->nDim();
